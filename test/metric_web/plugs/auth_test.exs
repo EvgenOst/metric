@@ -27,7 +27,7 @@ defmodule MetricWeb.Plugs.AuthTest do
     test "with invalid params" do
       conn = build_conn()
       conn = get(conn, "/api/v1/universal") |> Auth.call()
-      assert json_response(conn, 200) == %{"status" => "error", "reason" => "Unathenticated"}
+      assert json_response(conn, 200) == %{"status" => "error", "reason" => "Unauthenticated"}
       assert conn.halted
     end
   end

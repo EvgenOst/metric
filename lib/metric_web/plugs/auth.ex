@@ -14,7 +14,7 @@ defmodule MetricWeb.Plugs.Auth do
       assign(conn, :current_user, user)
     else
       conn
-      |> json(%{"status" => "error", "reason" => "Unathenticated"})
+      |> json(%{"status" => "error", "reason" => "Unauthenticated"})
       |> halt()
     end
   end

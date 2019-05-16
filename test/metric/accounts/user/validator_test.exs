@@ -1,6 +1,6 @@
 defmodule Metric.Accounts.User.ValidatorTest do
   use Metric.DataCase
-  alias Metric.Utils
+  alias Metric.{Utils, Repo}
   alias Metric.Accounts.User
   alias Metric.Accounts.User.Validator
   import Metric.Factory
@@ -32,6 +32,13 @@ defmodule Metric.Accounts.User.ValidatorTest do
         changeset = Validator.create_changeset(%User{}, %{username: username})
         assert errors_on(changeset)[:username] |> is_nil()
       end
+    end
+
+    test "validate username uniqueness" do
+      user = insert(:user)
+      params = params_for(:user, username: user.username)
+      assert {:error, changeset} = Validator.create_changeset(%User{}, params) |> Repo.insert()
+      assert "has already been taken" in errors_on(changeset)[:username] 
     end
 
     test "validate firstname length" do

@@ -55,3 +55,8 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+config :metric, :measurements_buffer,
+  pool_size: 5,
+  period_ms: 200,
+  batch_size: 100

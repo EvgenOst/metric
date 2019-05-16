@@ -16,3 +16,8 @@ config :metric, MetricWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+config :metric, :measurements_buffer,
+  pool_size: 1,
+  period_ms: 2000,
+  batch_size: 2

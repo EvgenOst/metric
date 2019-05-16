@@ -1,3 +1,5 @@
+{:ok, _} = Metric.Repo.start_link()
 {:ok, _} = Application.ensure_all_started(:ex_machina)
+{:ok, _} = MetricWeb.Endpoint.start_link()
 ExUnit.start()
 Ecto.Adapters.SQL.Sandbox.mode(Metric.Repo, :manual)

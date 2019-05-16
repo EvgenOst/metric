@@ -11,7 +11,8 @@ defmodule Metric.Factory do
       height: 175.0,
       weight: 77.0,
       password: "password",
-      hashed_password: Bcrypt.Base.hash_password("password", Bcrypt.gen_salt(12, true))
+      hashed_password: Bcrypt.Base.hash_password("password", Bcrypt.gen_salt(12, true)),
+      token: "token123"
     }
   end
 end

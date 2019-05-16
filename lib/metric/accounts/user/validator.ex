@@ -30,6 +30,7 @@ defmodule Metric.Accounts.User.Validator do
 
   defp validate_username(changeset) do
     changeset
+    |> update_change(:username, &String.downcase/1)
     |> validate_format(:username, ~r/^[a-zA-Z0-9._-]*$/)
     |> validate_length(:username, min: 2, max: 50)
     |> unique_constraint(:username)

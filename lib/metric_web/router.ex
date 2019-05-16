@@ -17,6 +17,8 @@ defmodule MetricWeb.Router do
   # With authentication
   scope "/api/v1", MetricWeb do
     pipe_through [:api, Auth]
+
+    post "/measurements", MeasurementController, :create
   end
 
   scope "/api/v1", MetricWeb do

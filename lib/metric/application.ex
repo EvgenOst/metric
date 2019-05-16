@@ -5,6 +5,8 @@ defmodule Metric.Application do
 
   use Application
 
+  @measurements_buffer_config Application.fetch_env!(:metric, :measurements_buffer)
+
   def start(_type, _args) do
     # List all child processes to be supervised
     children = [
@@ -14,7 +16,7 @@ defmodule Metric.Application do
       MetricWeb.Endpoint
       # Starts a worker by calling: Metric.Worker.start_link(arg)
       # {Metric.Worker, arg},
-    ]
+    ] ++ measurements_buffer_workers()
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
@@ -27,5 +29,13 @@ defmodule Metric.Application do
   def config_change(changed, _new, removed) do
     MetricWeb.Endpoint.config_change(changed, removed)
     :ok
+  end
+
+  defp measurements_buffer_workers() do
+    pool_size = Keyword.fetch!(@measurements_buffer_config, :pool_size)
+
+    for index <- 1..pool_size do
+      Supervisor.child_spec({Metric.Measurements.Buffer, index}, id: :"measurements_buffer_#{index}")
+    end
   end
 end
